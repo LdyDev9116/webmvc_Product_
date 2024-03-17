@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssg.springex3.mapper.ProductMapper">
+    <select id="getTime" resultType="string">
+        select now()
+    </select>
+
+    <insert id="insert">
+        insert into tbl_product (name, dueDate, price, quantity) values(#{name}, #{dueDate}, #{price}, #{quantity});
+    </insert>
+    <select id="selectAll" resultType="com.ssg.springex3.domain.ProductVo">
+        select * from tbl_product order by  pno desc
+    </select>
+
+    <select id="selectOne" resultType="com.ssg.springex3.domain.ProductVo">
+        select * from tbl_product where pno = #{pno}
+    </select>
+
+    <delete id="delete" >
+        delete from tbl_product where pno = #{pno}
+    </delete>
+
+    <update id="update">
+        update tbl_product set name = #{name}
+                            ,dueDate = #{dueDate}
+                            ,price = #{price}
+                            ,quantity= #{quantity}
+                        where pno = #{pno}
+    </update>
+
+<!--    <select id="selectList" resultType="com.ssg.springex.domain.TodoVo">-->
+<!--        select * from tbl_todo order by  tno desc limit #{skip}, #{size};-->
+<!--    </select>-->
+
+    <select id="getCount" resultType="int">
+        select count(pno) from tbl_product ;
+    </select>
+
+    <select id="selectList" resultType="com.ssg.springex3.domain.ProductVo">
+        select * from tbl_product
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR ">
+                    <if test="type == 'n'.toString()">
+                        name like concat('%', #{keyword}, '%')
+                    </if>
+                    <!-- 여기서 writer 대신 다른 조건을 추가할 수 있습니다, 예를 들어 'price'나 'quantity' -->
+                </foreach>
+            </if>
+
+            <if test="from != null and to != null">
+                <trim prefix="and">
+                    dueDate between #{from} and #{to}
+                </trim>
+            </if>
+        </where>
+        order by pno desc limit #{skip}, #{size}
+    </select>
+
+
+
+</mapper>

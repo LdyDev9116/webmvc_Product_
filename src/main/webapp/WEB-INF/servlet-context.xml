@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc
+                           https://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context
+                           https://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 스프링 MVC 설정을 활성화합니다. @Controller 어노테이션을 사용하는 클래스들을 자동으로 감지하여 요청 처리에 사용합니다. -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!-- 사용자 정의 형식 변환을 위한 서비스 등록 -->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <!-- 정적 자원(이미지, JS, CSS 등)의 경로 설정. /resources/ 아래의 모든 경로를 정적 자원으로 처리합니다. -->
+    <mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+
+    <!-- 뷰 리졸버 설정. 컨트롤러의 반환 값(뷰 이름)을 바탕으로 실제 JSP 페이지의 경로를 결정합니다. -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- JSP 파일이 위치하는 경로 -->
+        <property name="prefix" value="/WEB-INF/views/"></property>
+        <!-- 반환된 뷰 이름에 자동으로 추가될 확장자 -->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!-- 컨트롤러 클래스들이 위치하는 패키지를 자동으로 스캔하여 빈으로 등록합니다. -->
+    <context:component-scan base-package="com.ssg.springex3.controller"></context:component-scan>
+
+    <!-- 형식 변환 서비스를 위한 빈 설정. 사용자 정의 포맷터를 등록할 수 있습니다. -->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!-- 사용할 포맷터들의 목록 -->
+        <property name="formatters">
+            <set>
+                <!-- LocalDate를 위한 사용자 정의 포맷터 -->
+                <bean class="com.ssg.springex3.controller.formatter.LocalDateFormatter"/>
+                <bean class="com.ssg.springex3.controller.formatter.CheckboxFormatter"/>
+            </set>
+        </property>
+    </bean>
+
+
+</beans>

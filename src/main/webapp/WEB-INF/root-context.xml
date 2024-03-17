@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+        <!-- Spring 설정 파일의 루트 엘리먼트입니다. 모든 설정은 이 엘리먼트 내부에 정의됩니다. -->
+
+        <!-- 사용되는 XML 네임스페이스를 정의합니다. -->
+
+        <!-- DataSource, JdbcTemplate 등의 빈을 생성하고,
+             ApplicationContext에서 사용될 다양한 빈 설정들을 정의합니다. -->
+
+        <!-- MyBatis와 Spring의 연결 설정입니다. -->
+
+        <!-- 이전의 SampleDAO와 SampleService 클래스에 대한 직접적인 빈 생성을 주석 처리합니다.
+             현재는 @Component 어노테이션과 같은 자동 스캐닝 기법을 사용하여 스프링이 자동으로 빈을 검색하고 생성합니다. -->
+
+        <!-- HikariCP(데이터베이스 커넥션 풀 라이브러리) 설정을 위한 빈 정의 -->
+        <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+                <property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
+                <property name="jdbcUrl" value="jdbc:mariadb://localhost:3307/webdb"></property>
+                <property name="username" value="webuser"></property>
+                <property name="password" value="webuser"></property>
+                <property name="dataSourceProperties">
+                        <props>
+                                <prop key="cachePrepStmts">true</prop>
+                                <prop key="prepStmtCacheSize">250</prop>
+                                <prop key="prepStmtCacheSqlLimit">2048</prop>
+                        </props>
+                </property>
+        </bean>
+
+        <!-- HikariCP를 이용한 DataSource 빈 정의. 애플리케이션에서 사용할 데이터베이스 커넥션 풀을 설정합니다. -->
+        <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+                <constructor-arg ref="hikariConfig"/>
+        </bean>
+
+        <!-- SqlSessionFactoryBean 설정: MyBatis의 SQL 세션 팩토리 빈을 생성.
+             데이터베이스와의 세션을 관리하며, MyBatis Mapper 파일들을 로딩합니다. -->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+                <property name="dataSource" ref="dataSource"/>
+                <property name="mapperLocations" value="classpath:/mapper/**/*.xml"/>
+        </bean>
+
+        <!-- 스프링의 component-scan 설정: 지정된 패키지 아래의 클래스들을 스캔하여, @Component 어노테이션이 붙은 클래스를 자동으로 빈으로 등록합니다. -->
+        <context:component-scan base-package="com.ssg.springex3"/>
+        <context:component-scan base-package="com.ssg.springex3.config"/>
+        <context:component-scan base-package="com.ssg.springex3.service"/>
+
+        <!-- MyBatis mapper 스캔 설정: 지정된 패키지 아래의 MyBatis Mapper 인터페이스를 스캔하여, SQL 세션 팩토리와 연결합니다. -->
+        <mybatis:scan base-package="com.ssg.springex3.mapper"/>
+
+</beans>
