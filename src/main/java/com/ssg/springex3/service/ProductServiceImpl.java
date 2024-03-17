@@ -55,8 +55,6 @@ public class ProductServiceImpl implements ProductService {
         productMapper.update(productVo);
     }
 
-
-
     @Override
     public PageResponseDTO<ProductDTO> getList(PageRequestDTO pageRequestDTO) {
         // 상품 목록을 가져오는 부분, TodoVo 대신 ProductVo 사용

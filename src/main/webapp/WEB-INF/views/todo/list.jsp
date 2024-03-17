@@ -90,7 +90,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${dtoList}" var="dto">
+                        <c:forEach items="${dtoList}" var="dto">
                                 <tr>
                                     <th scope="row"><c:out value="${dto.pno}"/></th>
                                     <td>
