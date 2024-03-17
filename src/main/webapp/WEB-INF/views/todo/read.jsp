@@ -47,80 +47,80 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">TNO</span>
-                            <input type="text" name="tno" class="form-control"
-                                   value=<c:out value="${dto.tno}"></c:out> readonly>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Title</span>
-                            <input type="text" name="title" class="form-control"
-                                   value='<c:out value="${dto.title}"></c:out>' readonly>
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">DueDate</span>
-                            <input type="date" name="dueDate" class="form-control"
-                                   value=<c:out value="${dto.dueDate}"></c:out> readonly>
-
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Writer</span>
-                            <input type="text" name="writer" class="form-control"
-                                   value=<c:out value="${dto.writer}"></c:out> readonly>
-
-                        </div>
-
-                        <div class="form-check">
-                            <label class="form-check-label" >
-                                Finished &nbsp;
-                            </label>
-                            <input class="form-check-input" type="checkbox" name="finished" ${dto.finished?"checked":""} disabled >
-                        </div>
-
-                        <div class="my-4">
-                            <div class="float-end">
-                                <button type="button" class="btn btn-primary">Modify</button>
-                                <button type="button" class="btn btn-secondary">List</button>
+                        <form action="/product/modify" method="post">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">상품 번호</span>
+                                <input type="text" name="pno" class="form-control"
+                                       value= "<c:out value="${dto.pno}"></c:out> " readonly>
                             </div>
-                        </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">상품 이름</span>
+                                <input type="text" name="pname" class="form-control"
+                                       value="<c:out value="${dto.name}"></c:out>" >
+                            </div>
 
-<%--                        <script>--%>
-<%--                            const formObj = document.querySelector("form")--%>
-<%--                            document.querySelector(".btn-danger").addEventListener("click",function(e) {--%>
-<%--                                e.preventDefault()--%>
-<%--                                e.stopPropagation()--%>
-<%--                                formObj.action ="/todo/remove"--%>
-<%--                                formObj.method ="post"--%>
-<%--                                formObj.submit()--%>
-<%--                            },false);--%>
-<%--                        </script>--%>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">상품 가격</span>
+                                <input type="text" name="price" class="form-control"
+                                       value=<c:out value="${dto.price}"></c:out> >
+
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">재고 수량</span>
+                                <input type="text" name="count" class="form-control"
+                                       value=<c:out value="${dto.quantity}"></c:out> >
+
+                            </div>
+
+                            <div class="my-4">
+                                <div class="float-end">
+                                    <button type="button" class="btn btn-primary">Modify</button>
+                                    <button type="button" class="btn btn-danger">Remove</button>
+                                    <button type="button" class="btn btn-secondary">List</button>
+                                </div>
+                            </div>
+                        </form>
 
                         <script>
-                           <%--document.querySelector(".btn-primary").addEventListener("click", function(e){--%>
-                           <%--     self.location = "/todo/modify?tno="+${dto.tno}--%>
-                           <%-- },false)--%>
 
+                            const formObj = document.querySelector("form")
+
+                            document.querySelector(".btn-danger").addEventListener("click",function(e) {
+
+                                e.preventDefault()
+                                e.stopPropagation()
+
+                                formObj.action ="/todo/remove"
+                                formObj.method ="post"
+
+                                formObj.submit()
+
+                            },false);
 
                             document.querySelector(".btn-primary").addEventListener("click", function(e){
-
-                                self.location = `/todo/modify?tno=${dto.tno}&${pageRequestDTO.link}`
-
+                                self.location = "/todo/modify?pno="+${dto.pno}
                             },false)
 
+                            /*
+                            document.querySelector(".btn-primary").addEventListener("click", function(e){
+
+                                self.location = `/product/modify?pno=${dto.pno}&${pageRequestDTO.link}`
+
+                            },false)
+                            */
 
 
-                            // document.querySelector(".btn-secondary").addEventListener("click", function(e){
-                            //     self.location = "/todo/list";
-                            // },false)
+                            document.querySelector(".btn-secondary").addEventListener("click", function(e){
+                                self.location = "/todo/list";
+                            },false)
 
                             //목록 페이지로 이동하는 이벤트 처리
-                            document.querySelector(".btn-secondary").addEventListener("click", function(e){
+                            <%--document.querySelector(".btn-secondary").addEventListener("click", function(e){--%>
 
-                                self.location = "/todo/list?${pageRequestDTO.link}"
+                            <%--    self.location = "/product/list?${pageRequestDTO.link}"--%>
 
-                            },false)
+                            <%--},false)--%>
 
                         </script>
 

@@ -82,35 +82,23 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">Tno</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Writer</th>
-                                <th scope="col">DueDate</th>
-                                <th scope="col">Finished</th>
+                                <th scope="col">pno</th>
+                                <th scope="col">name</th>
+                                <th scope="col">price</th>
+                                <th scope="col">quantity</th>
                             </tr>
                             </thead>
                             <tbody>
-                        <c:forEach items="${dtoList}" var="dto">
+                            <c:forEach items="${responseDTO.dtoList}" var="dto">
                                 <tr>
                                     <th scope="row"><c:out value="${dto.pno}"/></th>
-                                    <td>
-                                        <a href="/product/read?pno=${dto.pno}&${pageRequestDTO.link}" class="text-decoration-none" data-id="${dto.pno}" >
-                                            <c:out value="${dto.pname}"/>
-                                        </a>
-                                    </td>
+                                    <td><c:out value="${dto.name}"/></td>
                                     <td><c:out value="${dto.price}"/></td>
-                                    <td><c:out value="${dto.count}"/></td>
+                                    <td><c:out value="${dto.quantity}"/></td>
                                     <td>
-                                        <form action="/product/modify">
-                                            <input type="hidden" name="pno" value="${dto.pno}">
-                                            <button type="submit">수정</button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form action="/product/remove" method="post">
-                                            <input type="hidden" name="pno" value="${dto.pno}">
-                                            <button type="submit">삭제</button>
-                                        </form>
+                                        <a href="/todo/read?pno=${dto.pno}" class="btn btn-primary">상세내역</a>
+                                        <a href="/todo/modify?pno=${dto.pno}" class="btn btn-warning">수정</a>
+                                        <a href="/todo/delete?pno=${dto.pno}" class="btn btn-danger">삭제</a>
                                     </td>
                                 </tr>
                             </c:forEach>

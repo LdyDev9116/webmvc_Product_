@@ -44,12 +44,12 @@ public class ProductController {
         if (bindingResult.hasErrors()){
             log.info(" hasErrors ~~~~~~~~~~~~~~~~~~~~~~ ");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/product/register";
+            return "redirect:/todo/register";
         }
         log.info("productDTO: " + productDTO );
         //service 에 등록 요청
         productService.register(productDTO);
-        return "redirect:/product/list";
+        return "redirect:/todo/list";
     }
 
     @GetMapping({"/read", "/modify"})
@@ -67,11 +67,11 @@ public class ProductController {
             log.info("has errors.......");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors() );
             redirectAttributes.addAttribute("pno", productDTO.getPno() );
-            return "redirect:/product/modify";
+            return "redirect:/todo/modify";
         }
         log.info(productDTO);
         productService.modify(productDTO);
-        return "redirect:/product/list";
+        return "redirect:/todo/list";
     }
 
     @PostMapping("/remove")
@@ -80,7 +80,7 @@ public class ProductController {
                          RedirectAttributes redirectAttributes){
         log.info("-------------remove------------------");
         productService.deleteOne(productDTO);
-        return "redirect:/product/list";
+        return "redirect:/todo/list";
     }
     // Other methods remain unchanged...
 }

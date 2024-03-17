@@ -53,13 +53,13 @@
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">TNO</span>
-                                <input type="text" name="tno" class="form-control"
-                                       value=<c:out value="${dto.tno}"></c:out> readonly>
+                                <input type="text" name="pno" class="form-control"
+                                       value=<c:out value="${dto.pno}"></c:out> readonly>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Title</span>
-                                <input type="text" name="title" class="form-control"
-                                       value=<c:out value="${dto.title}"></c:out> >
+                                <input type="text" name="name" class="form-control"
+                                       value=<c:out value="${dto.name}"></c:out> >
                             </div>
 
                             <div class="input-group mb-3">
@@ -71,17 +71,17 @@
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Writer</span>
-                                <input type="text" name="writer" class="form-control"
-                                       value=<c:out value="${dto.writer}"></c:out> readonly>
+                                <input type="text" name="quantity" class="form-control"
+                                       value=<c:out value="${dto.quantity}"></c:out> readonly>
 
                             </div>
 
-                            <div class="form-check">
-                                <label class="form-check-label" >
-                                    Finished &nbsp;
-                                </label>
-                                <input class="form-check-input" type="checkbox" name="finished" ${dto.finished?"checked":""} >
-                            </div>
+<%--                            <div class="form-check">--%>
+<%--                                <label class="form-check-label" >--%>
+<%--                                    Finished &nbsp;--%>
+<%--                                </label>--%>
+<%--                                <input class="form-check-input" type="checkbox" name="finished" ${dto.finished?"checked":""} >--%>
+<%--                            </div>--%>
 
                             <div class="my-4">
                                 <div class="float-end">
